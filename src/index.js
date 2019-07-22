@@ -24,7 +24,6 @@ ReactDOM.render((
       <Route path="/SafariZone" component={SafariZone} />
       <Route path="/success" component={Success} />
       <Route path="/failure" component={Failure} />
-      <Route path="*" component={Home} />
     </BrowserRouter>
 ), document.getElementById('root'));
 
