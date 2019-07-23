@@ -20,6 +20,7 @@ export default class SafariZone extends React.Component {
           catchedPokemons: [],
           rounds: 0,
           pokeballsLeft: 20,
+          gameDetails: ''
         }
         this.start()
       }
@@ -88,7 +89,6 @@ export default class SafariZone extends React.Component {
           pokemonPositions,
           encounteredPokemons: []
         })
-        console.warn(this.state.pokeballsLeft , catchedPokemons.length)
       }
 
       shuffle(array){
@@ -105,7 +105,6 @@ export default class SafariZone extends React.Component {
       
       render(){
         if(this.state.catchedPokemons.length == 16 || this.state.pokeballsLeft == 0){
-            console.log('game finished')
             const newTo = { 
                 pathname: "", 
                 userName: this.props.location.userName,
@@ -120,7 +119,7 @@ export default class SafariZone extends React.Component {
                 <div className="justify-content-center">
                     <div className="col col-12 align-self-center">
                         <div className="bs-component">
-                            <h4>Hello { this.props.location.userName }</h4>
+                            <h4>Hello { this.props.gameDetails }</h4>
                             <p className="text-light font-weight-bold">Round: <strong>{this.state.rounds}</strong> - Pokeballs: <strong>{this.state.pokeballsLeft}</strong></p>
                             <p className="text-light font-weight-bold">Pokemons Catched: <strong>{this.state.catchedPokemons.length}</strong>.</p>
                             <div className="row">

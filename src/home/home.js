@@ -3,34 +3,26 @@ import { Link } from 'react-router-dom';
 
 import { createStore } from './../state/store/store'
 import { connect } from 'react-redux'
-import { registerUser } from './../state/actions/actions'
+import { registerUserAction } from './../state/actions/actions'
 
 
 class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            userName: ''
+          input: '',
         };
-        this.onRegisterUser = this.onRegisterUser.bind(this);
-    }
+      }
 
-    registerUser() {
-        this.setState({
-          userName: this.state.userName
-        })
-    }
+    onSubmit = () => {
+        this.props.registerUser(this.state.input);
+        this.setState({input: ''});
+      }
 
-    onChangeInput(e) {
-        this.setState({
-          userName: e.target.value
-        })
-    }
-
-    onRegisterUser(event){
-        this.props.onRegisterUser(event.target.value);
-    }
-
+      onChange = (e) => {
+        this.setState({input : e.target.value});
+      }
+      
     render() {
           
         return (
@@ -42,8 +34,9 @@ class Home extends React.Component {
                         <p className="text-justify text-white">Choose your level, catch them all, and you may win a prize!</p>
                         <input type="text" className="form-control" 
                             placeholder="What is your name?"
-                            onChange={this.onRegisterUser}/>
-                        <Link to={'/SafariZone'} onClick={this.onRegisterUser} className="btn btn-success m-2"> Enter </Link>
+                            value={this.state.input} 
+                            onChange={ this.onChange } />
+                        <Link to={'/SafariZone'}  onClick={this.onSubmit} value={this.state.input} className="btn btn-success m-2"> Enter </Link>
                     </div>
                 </div>
             </div>
@@ -51,12 +44,16 @@ class Home extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-    userName: state.userName 
-})
-
-const mapActionToProps = {
-    onRegisterUser: registerUser
+const mapStateToProps = (state) => {
+    return { gameDetails: state.gameDetails }
 }
 
-export default connect(mapStateToProps, mapActionToProps)(Home)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registerUser: (payload) => {
+      dispatch(registerUserAction(payload))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
